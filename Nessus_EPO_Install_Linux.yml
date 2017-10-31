@@ -1,0 +1,40 @@
+- hosts: localhost
+  tasks:
+   ###################
+   # Install ePO Agent
+   ##################
+    - name: download MFErt.i686 from s3
+    # Edit the s3 location of the agent below
+      shell: aws s3 cp --region us-east-1 s3://<s3 bucket name>/MFErt.i686.rpm /tmp
+
+    - name: install install MFErt.i686
+      yum:
+       name: /tmp/MFErt.i686.rpm
+       state: present
+
+    - name: download MFEcma.i686 from s3
+    # Edit the s3 location of the agent below
+      shell: aws s3 cp --region us-east-1 s3://<s3 bucket name>/MFEcma.i686.rpm /tmp
+
+    - name: install MFEcma.i686
+      yum:
+       name: /tmp/MFEcma.i686.rpm
+       state: present
+       
+    ######################
+    # Install Nessus Agent
+    ######################
+    - name: download nessus agent from s3
+    # Edit the s3 location of the agent below
+      shell: aws s3 cp --region us-east-1 s3://<s3 bucket name>/NessusAgent-6.10.9-es7.x86_64.rpm /tmp
+
+    - name: install nessus agent
+      yum:
+       name: /tmp/NessusAgent-6.10.9-es7.x86_64.rpm
+       state: present
+
+    - name: join the agent to a master
+      shell: /opt/nessus_agent/sbin/nessuscli agent link -- key=  --host=cloud.tenable.com --port=443
+      
+    - name: verify the join was successful
+      shell: /opt/nessus_agent/sbin/nessuscli agent status
