@@ -47,4 +47,3 @@
       shell: cd /tmp && sudo bash install
 
     - name: make sure the inspector agent is running
-~
