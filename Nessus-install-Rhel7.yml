@@ -9,7 +9,7 @@
        state: present
 
     - name: join the agent to a master
-      shell: /opt/nessus_agent/sbin/nessuscli agent link -- key=00b5a8fec9f3a21fa1cff66ce99c6324adf324226948c6f1516eb9f9433b964744
+      shell: /opt/nessus_agent/sbin/nessuscli agent link -- key=
 
     - name: verify the join was successful
       shell: /opt/nessus_agent/sbin/nessuscli agent status
